@@ -1,0 +1,170 @@
+{
+  "name": "historico-clima-in-sheet",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 20
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "a4f9efff-a93c-4b16-b5c4-3b6138333a20",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "cityName": "Bucaramanga, CO",
+        "language": "en"
+      },
+      "type": "n8n-nodes-base.openWeatherMap",
+      "typeVersion": 1,
+      "position": [
+        220,
+        0
+      ],
+      "id": "0a8641db-19df-41ed-bfd6-ba8a49b650b2",
+      "name": "OpenWeatherMap",
+      "credentials": {
+        "openWeatherMapApi": {
+          "id": "ZiZeoCqYxaDFtN3m",
+          "name": "OpenWeatherMap"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1P9edMSOfjBkj-4tVRgVuWB9gEH5fFgclwPbTXr4JP8o",
+          "mode": "list",
+          "cachedResultName": "historico-clima",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1P9edMSOfjBkj-4tVRgVuWB9gEH5fFgclwPbTXr4JP8o/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1P9edMSOfjBkj-4tVRgVuWB9gEH5fFgclwPbTXr4JP8o/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "City": "={{ $json.name }}",
+            "Fecha": "={{ $('Schedule Trigger').item.json.timestamp }}",
+            "Hora": "={{ $('Schedule Trigger').item.json['Readable time'] }}",
+            "Temperatura": "={{ $json.main.temp }} °C"
+          },
+          "matchingColumns": [
+            "City"
+          ],
+          "schema": [
+            {
+              "id": "City",
+              "displayName": "City",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Fecha",
+              "displayName": "Fecha",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Hora",
+              "displayName": "Hora",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Temperatura",
+              "displayName": "Temperatura",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        440,
+        0
+      ],
+      "id": "aba5255c-63d6-4587-afb3-23efe173d939",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "vtNzJSSJ4uIaz0Q1",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "OpenWeatherMap",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenWeatherMap": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "3808aeba-1d87-4e5b-af9e-f75d7256dd1e",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "37bc429f08dbfd89a5e0bc3dcd6bcfe991510deb0ae7a4677daf130456f4e59e"
+  },
+  "id": "oAvPA7Qm7HD4N4ep",
+  "tags": []
+}
