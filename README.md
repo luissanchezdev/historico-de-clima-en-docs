@@ -1,6 +1,6 @@
 # Historico de clima
 
-[Workflow N8N]('./images/workflow.png')
+![Workflow N8N]('./images/workflow.png')
 
 ## Credenciales necesarias en n8n:
 
